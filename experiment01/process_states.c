@@ -18,7 +18,7 @@ int main(int argc, const char *argv[]) {
 
     PCB pcb_A = {"A", 1010, 20, 3};
     PCB pcb_B = {"B", 1015, 30, 2};
-    PCB pcb_C = {"C", 1045, 10, 4};
+    PCB pcb_C = {"C", 1042, 10, 4};
     PCB pcb_D = {"D", 1000, 15, 1};
     PCB pcb_E = {"E", 1020, 15, 3};
 
@@ -210,7 +210,7 @@ bool EventWait(PNode *Running, PNode *Blocked, PNode *Ready,
     PCB pcb;
     Pop(Running, &pcb);
     Push(Blocked, pcb);
-    if (!IsEmpty(Ready)) {
+    if (IsEmpty(Ready)) {
         Active(ReadySuspend, BlockedSuspend, Ready, Running, Blocked);
     }
     Dispatch(Ready, Running, ReadySuspend, BlockedSuspend, Blocked);
@@ -255,6 +255,8 @@ void Create(PNode *New, PNode *Running, PNode *Ready, PNode *Blocked,
     printf("\033[40;36mPlease enter the process prio: \033[0m");
     scanf("%d", &pcb.prio);
     getchar();
+    srand((unsigned)time(NULL));
+    pcb.PID = rand() % 1045 + 1050;  // PID范围为 1050-2094
 
     if (CalcMemorySpace(pcb, Running, Ready, Blocked)) {  // 加入到就绪队列
         Push(New, pcb);
@@ -321,6 +323,8 @@ void Active(PNode *ReadySuspend, PNode *BlockedSuspend, PNode *Ready,
             if (IsEmpty(Running)) {
                 Dispatch(Ready, Running, ReadySuspend, BlockedSuspend, Blocked);
             }
+        } else {
+            printf("Low priority, active fail!")
         }
     }
 }
