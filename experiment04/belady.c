@@ -6,7 +6,12 @@
 #include <unistd.h>
 
 #define TOTAL_INSTRUCTION 12
-#define FRAME_NUM 4
+/*
+Belady现象: 在内存中分配3个页面，缺页率为0.75
+           在内存中分配4个页面，缺页率为0.83
+*/
+#define FRAME_NUM 3
+//#define FRAME_NUM 4
 
 typedef struct {         // 分配给进程的页框
     int page_num;        // 存放的某一页面
