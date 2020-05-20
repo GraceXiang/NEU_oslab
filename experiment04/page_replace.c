@@ -9,7 +9,7 @@
 #define FRAME_NUM 3
 
 typedef struct {         // 分配给进程的页框
-    int page_num;        // 存放的某一页面
+    int page_num;        // 存放的某一逻辑页面
     int interview_time;  // 访问时间(LRU置换策略的参考对象，数值越大访问越早，优先被置换)
     // char flag;
 } PageFrame;
@@ -38,6 +38,7 @@ void PrintPageFrame(PageFrame pagefrmae[]) {
 void FIFO(int Acess_Series[], PageFrame pagefrmae[]) {
     int hit_num = 0, diseffect = 0;
     int i, j, residence_pointer = 0;  // 置换指针(FIFO算法参考对象)
+
     for (i = 0; i < TOTAL_INSTRUCTION; i++) {
         printf("\033[40;32m\nStart to access logical page %d\033[0m\n",
                Acess_Series[i]);
@@ -70,9 +71,9 @@ void FIFO(int Acess_Series[], PageFrame pagefrmae[]) {
 }
 
 void LRU(int Acess_Series[], PageFrame pagefrmae[]) {
-    sleep(1);  // 等待子进程1结束
     int hit_num = 0, diseffect = 0;
     int i, j = 0;
+
     for (i = 0; i < TOTAL_INSTRUCTION; i++) {
         printf("\033[40;32m\nStart to access logical page %d\033[0m\n",
                Acess_Series[i]);
@@ -145,10 +146,11 @@ int main(int argc, const char* argv[]) {
         printf("FIFO:");
         FIFO(Acess_Series, pagefrmae);  // 先进先出算法
     } else if (i == 1) {
+        sleep(1);  // 等待子进程1结束
         printf("LRU:");
         LRU(Acess_Series, pagefrmae);  // 最近最久未使用算法
     } else {
-        for (i = 0; i < 2; i++) wait(NULL);  // 阻塞回收两个个子进程
+        for (i = 0; i < 2; i++) wait(NULL);  // 阻塞回收两个子进程
     }
 
     return 0;

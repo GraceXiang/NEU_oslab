@@ -41,8 +41,9 @@ void PrintPageFrame(PageFrame pagefrmae[]) {
 }
 
 void FIFO(int Acess_Series[], PageFrame pagefrmae[]) {
-    int hit_num, diseffect = 0;
+    int hit_num = 0, diseffect = 0;
     int i, j, residence_pointer = 0;  // 置换指针(FIFO算法参考对象)
+    
     for (i = 0; i < TOTAL_INSTRUCTION; i++) {
         printf("\033[40;32m\nStart to access logical page %d\033[0m\n",
                Acess_Series[i]);
