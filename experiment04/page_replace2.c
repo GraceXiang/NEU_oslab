@@ -89,7 +89,8 @@ void CLOCK(int Acess_Series[], PageFrame pagefrmae[]) {
         }
     }
     printf(
-        "\033[40;34mThe page interrupt rate for FIFO strategy is %.2f\033[0m\n",
+        "\033[40;34mThe page interrupt rate for CLOCK strategy is "
+        "%.2f\033[0m\n",
         diseffect * 1.0 / TOTAL_INSTRUCTION);
 }
 
@@ -149,7 +150,8 @@ void CLOCK_Improved(int Acess_Series[], PageFrame pagefrmae[]) {
         }
     }
     printf(
-        "\033[40;34mThe page interrupt rate for FIFO strategy is %.2f\033[0m\n",
+        "\033[40;34mThe page interrupt rate for CLOCK_Improved strategy is "
+        "%.2f\033[0m\n",
         diseffect * 1.0 / TOTAL_INSTRUCTION);
 }
 
@@ -175,8 +177,8 @@ int main(int argc, const char* argv[]) {
         printf("CLOCK:");
         CLOCK(Acess_Series, pagefrmae);  // 时钟置换算法
     } else if (i == 1) {
-        sleep(1);  // 等待子进程1结束
-        printf("LRU:");
+        sleep(2);  // 等待子进程1结束
+        printf("CLOCK_Improved:");
         CLOCK_Improved(Acess_Series, pagefrmae);  // 改进的时钟置换算法
     } else {
         for (i = 0; i < 2; i++) wait(NULL);  // 阻塞回收两个子进程
